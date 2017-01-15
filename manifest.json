@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+
+  "name": "News Aggregator",
+  "description": "This extension aggregates news articles from various websites.",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png", // Newspaper by Adrián de la Natividad from the Noun Project
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/"
+  ]
+}
