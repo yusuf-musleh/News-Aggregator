@@ -1,14 +1,30 @@
+chrome.runtime.onStartup.addListener(function (){
+    console.log('it started up!');
+})
+
 $(document).ready(function(){
 
 	console.log('running script using jquery!');
 
+  // display news home
   $("#news_home_btn").click(function(){
+      chrome.storage.sync.get('sources', function(data){
+          console.log(data);
+      });
       show_news_home();
 
   });
 
+  // display news sources
   $("#select_sources_btn").click(function() {
       show_sources();
+  });
+
+  // save selected news sources to fetch articles from
+  $("#save_sources_btn").click(function() {
+    chrome.storage.sync.set({'sources': $('.selectpicker').val()}, function() {
+        console.log("saved sources!");
+    });
   });
 
 });
@@ -56,3 +72,18 @@ function get_available_sources() {
   });
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
