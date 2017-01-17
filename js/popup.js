@@ -40,10 +40,19 @@ function get_available_sources() {
 	    format: "json"
 	})
   .done(function( data ) {
+
+      // adding all source options to the select
     	$.each( data.sources, function( i, item ) {
-    		  var source_logo = "<img src=" + item.urlsToLogos.small + "></img>";
-       	  $("#select_sources").append("<p>" + source_logo + item.name + "</p>");
-  		});
+
+    		  // var source_logo = "<img src=" + item.urlsToLogos.small + "></img>";
+          $('#source_options').append($("<option></option>").attr("value",item.name).text(item.name));
+
+    	});
+
+      // refreshing and rerending select options with all sources
+      $('#source_options').selectpicker('refresh');
+      $('#source_options').selectpicker('render');
+
   });
 
 };
