@@ -1,12 +1,9 @@
-chrome.runtime.onStartup.addListener(function (){
-    console.log('it started up!');
-})
-
 $(document).ready(function(){
 
-	console.log('running script using jquery!');
+  // fetch available news sources from api
+  get_available_sources();
 
-  // display news home
+  // display news home when clicked
   $("#news_home_btn").click(function(){
       chrome.storage.sync.get('sources', function(data){
           console.log(data);
@@ -15,9 +12,15 @@ $(document).ready(function(){
 
   });
 
-  // display news sources
+  // display news sources when clicked
   $("#select_sources_btn").click(function() {
       show_sources();
+
+      // getting news sources saved
+      chrome.storage.sync.get('sources', function(data){
+          $('#source_options').selectpicker('val', data.sources);
+      });
+
   });
 
   // save selected news sources to fetch articles from
@@ -30,16 +33,19 @@ $(document).ready(function(){
 });
 
 
+// Hide news home and show sources to select
 function show_sources() {
-    get_available_sources();
+
     $("#news_home").css('display', 'none');
     $("#news_home_btn").removeClass("active");
     $("#select_sources").css('display', 'block');
     $("#select_sources_btn").addClass("active");
     $('#navbar').collapse('hide');
+
 }
 
 
+// Hide sources select and show news home
 function show_news_home() {
     $("#news_home").css('display', 'block');
     $("#news_home_btn").addClass("active");
@@ -56,7 +62,7 @@ function get_available_sources() {
 	    format: "json"
 	})
   .done(function( data ) {
-
+      $('#source_options').html(""); // CHANGE THIS ADD CACHEING TO FIX [PROBABLY]
       // adding all source options to the select
     	$.each( data.sources, function( i, item ) {
 
