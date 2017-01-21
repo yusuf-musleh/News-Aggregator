@@ -23,3 +23,7 @@ html {
 .text-muted {
   margin: 20px 0;
 }
+
+#news_home {
+	padding-bottom: 39px;
+}
