@@ -117,7 +117,11 @@ function get_articles_from_source(source, source_data) {
             // $("#news_home").append("<h4>"+ data.source +"</h4>");
             $("#news_home").append("<div style=\"text-align: center\"><a href=\"" + source_data.url + "\" target=\"_blank\" ><img style=\"height: 50px\" src=\"" + source_data.logo_url + "\" /></a><br><h4>Latest <b>" + source_data.name + "</b> Articles</h4></div><hr>");
             $.each(data.articles, function (i, item) {
-                $("#news_home").append("<p>" + item.title + "</p><p>" + item.description + "</p><hr>");
+                var article_description = item.description;
+                if (article_description == null){
+                    article_description = 'No description.';
+                }
+                $("#news_home").append("<p style='font-weight: bold'><a href=\"" + item.url + "\" target=\"_blank\">" + item.title + "</a></p><p>" + article_description + "</p><hr>");
             });
 
         }
