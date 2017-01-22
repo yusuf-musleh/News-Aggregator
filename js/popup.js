@@ -34,6 +34,9 @@ $(document).ready(function(){
 
     chrome.storage.sync.set({'sources': $('.selectpicker').val()}, function() {
         console.log("saved sources!");
+        $("#save_status").html("<div class=\"alert alert-success\">\
+          <strong>Success!</strong> Selected Sources Saveed!\
+          </div>")
     });
   });
 
@@ -56,6 +59,7 @@ function show_sources() {
     $("#select_sources").css('display', 'block');
     $("#select_sources_btn").addClass("active");
     $('#navbar').collapse('hide');
+    $("#save_status").html("");
 
 }
 
