@@ -149,7 +149,10 @@ function get_all_articles() {
                 console.log(selected_source.sources);
                 $("#news_home").append("<div class=\"alert alert-info\" role=\"alert\"><strong>Heads up!</strong> Please select news sources from the drop down menu to pull articles from!</div>")
             }
-            $("#news_home").append("<div id='loading_div' style=\"text-align: center\"><img src=\"node_modules/loading-svg/loading-spin.svg\" alt=\"Loading icon\" /></div>");
+            else {
+                $("#news_home").append("<div id='loading_div' style=\"text-align: center\"><img src=\"node_modules/loading-svg/loading-spin.svg\" alt=\"Loading icon\" /></div>");
+            }
+
             $.each(selected_source.sources, function (i, item) {
                 get_articles_from_source(item, data.all_source_data[item]);
             });
