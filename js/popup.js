@@ -108,17 +108,18 @@ function get_available_sources() {
 
 };
 
+
+// Make Api call to get news articles from passed in source
 function get_articles_from_source(source, source_data) {
-    console.log(source_data);
-    // https://newsapi.org/v1/articles?source=techcrunch&apiKey=7dea1f516b5d4a86963b1a703eb14eda
+
     var newsapi_article_url = "https://newsapi.org/v1/articles?source=" + source + "&apiKey=7dea1f516b5d4a86963b1a703eb14eda"
     $.getJSON( newsapi_article_url, {
         format: "json"
     })
     .done(function( data ) {
-        // console.log(data);
+
         if (data.status == 'ok') {
-            // $("#news_home").append("<h4>"+ data.source +"</h4>");
+
             $("#news_home").append("<div style=\"text-align: center\"><a href=\"" + source_data.url + "\" target=\"_blank\" ><img style=\"height: 50px\" src=\"" + source_data.logo_url + "\" /></a><br><h4>Latest <b>" + source_data.name + "</b> Articles</h4></div><hr>");
             $.each(data.articles, function (i, item) {
                 var article_description = item.description;
@@ -129,20 +130,24 @@ function get_articles_from_source(source, source_data) {
             });
 
         }
-        // $.each( data.sources, function( i, item ) {
 
-        // });
     });
 }
 
+
+// For each source selected call get_articles_from_source while passing in relevent information
 function get_all_articles() {
     $("#news_home").html("");
 
     chrome.storage.sync.get('all_source_data', function(data){
-        // console.log(data);
+
         // getting news sources selected & saved
         chrome.storage.sync.get('sources', function(selected_source){
-            console.log(data.all_source_data);
+            if (!selected_source.sources || selected_source.sources.length == 0) {
+                console.log("no sources selected!");
+                console.log(selected_source.sources);
+                $("#news_home").append("<div class=\"alert alert-info\" role=\"alert\"><strong>Heads up!</strong> Please select news sources from the drop down menu to pull articles from!</div>")
+            }
             $.each(selected_source.sources, function (i, item) {
                 get_articles_from_source(item, data.all_source_data[item]);
             });
@@ -150,14 +155,6 @@ function get_all_articles() {
     });
 
 }
-
-
-
-
-
-
-
-
 
 
 
