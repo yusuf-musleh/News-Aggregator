@@ -119,6 +119,7 @@ function get_articles_from_source(source, source_data) {
     .done(function( data ) {
 
         if (data.status == 'ok') {
+            $("#loading_div").remove();
 
             $("#news_home").append("<div style=\"text-align: center\"><a href=\"" + source_data.url + "\" target=\"_blank\" ><img style=\"height: 50px\" src=\"" + source_data.logo_url + "\" /></a><br><h4>Latest <b>" + source_data.name + "</b> Articles</h4></div><hr>");
             $.each(data.articles, function (i, item) {
@@ -148,6 +149,7 @@ function get_all_articles() {
                 console.log(selected_source.sources);
                 $("#news_home").append("<div class=\"alert alert-info\" role=\"alert\"><strong>Heads up!</strong> Please select news sources from the drop down menu to pull articles from!</div>")
             }
+            $("#news_home").append("<div id='loading_div' style=\"text-align: center\"><img src=\"node_modules/loading-svg/loading-spin.svg\" alt=\"Loading icon\" /></div>");
             $.each(selected_source.sources, function (i, item) {
                 get_articles_from_source(item, data.all_source_data[item]);
             });
