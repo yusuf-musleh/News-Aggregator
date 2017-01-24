@@ -6,13 +6,20 @@
   "version": "1.0",
 
   "browser_action": {
-    "default_icon": "icon.png", // Newspaper by Adrián de la Natividad from the Noun Project
+    "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
+
+  "icons": {
+    "16": "icon16.png",
+    "19": "icon.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
   "permissions": [
     "activeTab",
     "https://ajax.googleapis.com/",
     "storage"
-
   ]
 }
