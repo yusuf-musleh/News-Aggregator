@@ -35,7 +35,7 @@ $(document).ready(function(){
     chrome.storage.sync.set({'sources': $('.selectpicker').val()}, function() {
         console.log("saved sources!");
         $("#save_status").html("<div class=\"alert alert-success\">\
-          <strong>Success!</strong> Selected Sources Saveed!\
+          <strong>Success!</strong> Selected Sources Saved!\
           </div>")
     });
   });
@@ -88,9 +88,8 @@ function get_available_sources() {
       // adding all source options to the select
     	$.each( data.sources, function( i, item ) {
           // getting relevant data for every source
-          source_data[item.id] = {'name': item.name, 'url': item.url, "logo_url": item.urlsToLogos.small};
+          source_data[item.id] = {'name': item.name, 'url': item.url};
 
-    		  // var source_logo = "<img src=" + item.urlsToLogos.small + "></img>";
           $('#source_options').append($("<option></option>").attr("value",item.id).text(item.name));
 
     	});
@@ -121,13 +120,17 @@ function get_articles_from_source(source, source_data) {
         if (data.status == 'ok') {
             $("#loading_div").remove();
 
-            $("#news_home").append("<div style=\"text-align: center\"><a href=\"" + source_data.url + "\" target=\"_blank\" ><img style=\"height: 50px\" src=\"" + source_data.logo_url + "\" /></a><br><h4>Latest <b>" + source_data.name + "</b> Articles</h4></div><hr>");
+            $("#news_home").append("<div style=\"text-align: center\"><h4>Latest <a href=\"" + source_data.url + "\" target=\"_blank\" ><b>" + source_data.name + "</b></a> Articles</h4></div><hr>");
             $.each(data.articles, function (i, item) {
                 var article_description = item.description;
+                var article_image_url = item.urlToImage;
                 if (article_description == null){
                     article_description = 'No description.';
                 }
-                $("#news_home").append("<p style='font-weight: bold'><a href=\"" + item.url + "\" target=\"_blank\">" + item.title + "</a></p><p>" + article_description + "</p><hr>");
+                if (article_image_url == null){
+                    article_image_url = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+                }
+                $("#news_home").append("<p style='font-weight: bold'><a href=\"" + item.url + "\" target=\"_blank\">" + item.title + "</a></p>  <img style=\"width: 250px; display: block; margin: 0 auto \" src=\"" + article_image_url + "\" /><br>  <p>" + article_description + "</p><hr>");
             });
 
         }
